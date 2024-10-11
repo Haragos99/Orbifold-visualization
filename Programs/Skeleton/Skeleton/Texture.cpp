@@ -1,4 +1,4 @@
-#include "Texture.h"
+#include "texture.h"
 
 std::vector<vec4> Texture::load(std::string pathname, bool transparent, int& width, int& height) {
 	FILE* file = fopen(pathname.c_str(), "r");

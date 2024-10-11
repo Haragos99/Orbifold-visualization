@@ -3,7 +3,11 @@
 #include "algebra.h"
 #include <vector>
 #include <string>
-#include "Texture.h"
+#include "texture.h"
+#include <fstream>
+#include <iostream>
+#include <filesystem>
+
 class GPUProgram {
 	//--------------------------
 	unsigned int shaderProgramId = 0;
@@ -31,7 +35,7 @@ public:
 
 	unsigned int getId() { return shaderProgramId; }
 
-	bool create(const char* const vertexShaderSource, const char* const fragmentShaderSource, const char* const fragmentShaderOutputName, const char* const geometryShaderSource = nullptr);
+	bool create(std::string vertexShaderSource, std::string fragmentShaderSource, const char* const fragmentShaderOutputName, const char* const geometryShaderSource = nullptr);
 	
 
 	void Use() { 		// make this program run
@@ -51,6 +55,7 @@ public:
 	void setUniform(const mat4& mat, const std::string& name);
 
 	void setUniform(const Texture& texture, const std::string& samplerName, unsigned int textureUnit = 0);
+	std::string readShaderFromFile(const std::string& filePath);
 
 	~GPUProgram() { if (shaderProgramId > 0) glDeleteProgram(shaderProgramId); }
 };

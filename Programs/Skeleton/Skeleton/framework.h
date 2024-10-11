@@ -1,10 +1,3 @@
-//=============================================================================================
-// Collection of programs from lecture slides.
-// Framework for assignments. Valid from 2020.
-//
-// Do not change it if you want to submit a homework.
-// In the homework, file operations other than printf are prohibited.
-//=============================================================================================
 #define _USE_MATH_DEFINES		// M_PI
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,10 +16,25 @@
 #include <GL/freeglut.h>	// must be downloaded unless you have an Apple
 #endif
 #include "algebra.h"
-
+#include "GPUProgram.h"
+#include "camera.h"
 // Resolution of screen
 const unsigned int windowWidth = 600, windowHeight = 600;
 
-//--------------------------
+class Sceen {
 
-//---------------------------
+	unsigned int vao, vbo;
+	GPUProgram sha;
+	Camera camera;
+	float F(float n, float k)
+	{
+		return ((n - 1) * (n - 1) + k * k) / ((n + 1) * (n + 1) + k * k);
+	}
+public:
+	void Build();
+	// the Draw
+	void Draw();
+
+	void Animate(float time);
+
+};

@@ -44,17 +44,26 @@ int GPUProgram::getLocation(const std::string& name) {	// get the address of a G
 }
 
 
-bool GPUProgram::create(const char* const vertexShaderSource,
-	const char* const fragmentShaderSource, const char* const fragmentShaderOutputName,
+bool GPUProgram::create(std::string vertexShaderSource,
+	std::string fragmentShaderSource, const char* const fragmentShaderOutputName,
 	const char* const geometryShaderSource)
 {
+	std::filesystem::path curent = std::filesystem::current_path();
+	std::string path = "C:\\Users\\Felhasználó\\OneDrive\\Documents\\GrafikaHaziCsomag\\Programs\\Skeleton\\Skeleton\\";
+	
+
+	std::string vs = readShaderFromFile(path + vertexShaderSource);
+	std::string fs = readShaderFromFile(path + fragmentShaderSource);
+
+	const char* const vertexShader_ = vs.c_str();
+	const char* const fragmentShader_ = fs.c_str();
 	// Create vertex shader from string
 	if (vertexShader == 0) vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	if (!vertexShader) {
 		printf("Error in vertex shader creation\n");
 		exit(1);
 	}
-	glShaderSource(vertexShader, 1, (const GLchar**)&vertexShaderSource, NULL);
+	glShaderSource(vertexShader, 1, (const GLchar**)&vertexShader_, NULL);
 	glCompileShader(vertexShader);
 	if (!checkShader(vertexShader, "Vertex shader error")) return false;
 
@@ -77,7 +86,7 @@ bool GPUProgram::create(const char* const vertexShaderSource,
 		exit(1);
 	}
 
-	glShaderSource(fragmentShader, 1, (const GLchar**)&fragmentShaderSource, NULL);
+	glShaderSource(fragmentShader, 1, (const GLchar**)&fragmentShader_, NULL);
 	glCompileShader(fragmentShader);
 	if (!checkShader(fragmentShader, "Fragment shader error")) return false;
 
@@ -140,4 +149,23 @@ void GPUProgram::setUniform(const Texture& texture, const std::string& samplerNa
 		glActiveTexture(GL_TEXTURE0 + textureUnit);
 		glBindTexture(GL_TEXTURE_2D, texture.textureId);
 	}
+}
+
+std::string GPUProgram::readShaderFromFile(const std::string& filePath) {
+	std::ifstream file(filePath);
+
+	if (!file.is_open()) {
+		std::cerr << "Failed to open file: " << filePath << std::endl;
+		return "";
+	}
+
+	std::string shaderSource;
+	std::string line;
+
+	while (std::getline(file, line)) {
+		shaderSource += line + "\n";
+	}
+
+	file.close();
+	return shaderSource;
 }
