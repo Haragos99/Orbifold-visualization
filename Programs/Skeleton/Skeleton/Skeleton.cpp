@@ -1,5 +1,6 @@
 
 #include "framework.h"
+#include "GPUProgram.h"
 #include <fstream>
 #include <string>
 #include <iostream>
