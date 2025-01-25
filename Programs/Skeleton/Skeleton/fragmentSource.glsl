@@ -33,7 +33,7 @@ uniform vec3 F0;
 uniform float s, c;
 void getDodcaPlane(int i,  out vec3 p, out vec3 normal)
 {
-	float scale = sqrt(3);
+	float scale = 1.73; //sqrt(3)
 	// point of dodecaeder
 	vec3 p1 = v[planes[3 * i] - 1];
 	// this for help calcolating the normalvector 
