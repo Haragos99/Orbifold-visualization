@@ -49,7 +49,7 @@ bool GPUProgram::create(std::string vertexShaderSource,
 	const char* const geometryShaderSource)
 {
 	std::filesystem::path curent = std::filesystem::current_path();
-	std::string path = curent.string()+"\\";
+	std::string path = curent.string()+"\\"+shaders+"\\";
 	
 
 	std::string vs = readShaderFromFile(path + vertexShaderSource);
