@@ -49,11 +49,12 @@ bool GPUProgram::create(std::string vertexShaderSource,
 	const char* const geometryShaderSource)
 {
 	std::filesystem::path curent = std::filesystem::current_path();
-	std::string path = curent.string()+"\\"+ "shaders"+ "\\";
+	std::string path = SHADER_DIR; // defined by CMake
+
 	
 
-	std::string vs = readShaderFromFile(path + vertexShaderSource);
-	std::string fs = readShaderFromFile(path + fragmentShaderSource);
+	std::string vs = readShaderFromFile(path + "\\" + vertexShaderSource);
+	std::string fs = readShaderFromFile(path +"\\" + fragmentShaderSource);
 
 	const char* const vertexShader_ = vs.c_str();
 	const char* const fragmentShader_ = fs.c_str();
